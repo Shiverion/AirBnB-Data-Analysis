@@ -72,6 +72,36 @@ Explore the interactive Tableau dashboard for detailed visual insights into the 
 - `notebooks/`: Jupyter Notebook with the complete analysis and visualization.
 - `README.md`: Project documentation.
 
+## System Design
+
+### Requirements
+
+- Clean Bangkok listing data and analyze demand, neighborhood patterns, and December revenue scenarios.
+- Export intermediate datasets for follow-up analysis and visualizations.
+
+### Pipeline
+
+```text
+Bundled listing CSV → cleaning and transformations → cleaned CSV
+                  → filtered subset → December scenario calculations
+                  → charts, findings, and analysis CSV
+```
+
+The notebook is the only analysis runner. It also contains an absolute Windows source path, so that cell must be adjusted when running outside the original environment.
+
+### Trade-offs
+
+| Decision | Benefit | Cost |
+| --- | --- | --- |
+| Keep analysis in a notebook with intermediate CSVs | Makes each transformation inspectable | Re-running cells out of order can leave stale outputs |
+| Estimate strategy scenarios from listing data | Supports comparison of proposed changes | Estimated revenue is not a measured booking outcome |
+
+### What to Revisit
+
+- Replace the machine-specific input path with a repository-relative configuration.
+- Record the exact source snapshot and assumptions behind each revenue scenario.
+- Add a dependency manifest and one documented notebook run order.
+
 ## **How to Run the Analysis**
 1. Clone this repository:
    ```bash
